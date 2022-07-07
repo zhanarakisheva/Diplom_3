@@ -3,6 +3,7 @@ package diplom.tests;
 import com.codeborne.selenide.Selenide;
 import diplom.pages.HomePage;
 import diplom.utils.ThrowAwayUser;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,18 +13,20 @@ public class HomePageTest {
 
     @Before
     public void setUp() throws Exception {
+        ThrowAwayUser.authenticate();
         page = Selenide.open("https://stellarburgers.nomoreparties.site", HomePage.class);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        ThrowAwayUser.logout();
     }
 
     @Test
     public void profileLinkTest() {
-        ThrowAwayUser.authenticate();
-
         page.profileNavLink.click();
 
         Selenide.Wait().until(driver -> driver.getCurrentUrl().equals("https://stellarburgers.nomoreparties.site/account/profile"));
-
-        ThrowAwayUser.logout();
     }
 
     @Test

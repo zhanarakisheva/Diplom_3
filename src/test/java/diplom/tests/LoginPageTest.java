@@ -1,5 +1,6 @@
 package diplom.tests;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import diplom.pages.ForgotPasswordPage;
 import diplom.pages.HomePage;
@@ -10,6 +11,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 
 public class LoginPageTest {
 
@@ -67,13 +71,13 @@ public class LoginPageTest {
     }
 
     public void directLoginTest(LoginPage page) throws Exception {
-        page.emailInput.setValue(user.email);
-        page.passwordInput.setValue(user.password);
-        page.submitButton.click();
+        page.emailInput.shouldBe(visible).setValue(user.email);
+        page.passwordInput.shouldBe(visible).setValue(user.password);
+        page.submitButton.shouldBe(visible).click();
 
         Selenide.Wait().until(driver -> driver.getCurrentUrl().equals("https://stellarburgers.nomoreparties.site/"));
         HomePage homePage = Selenide.page(HomePage.class);
-        Assert.assertEquals("Оформить заказ", homePage.logInLink.text());
+        homePage.logInLink.shouldBe(visible).shouldHave(text("Оформить заказ"));
     }
 
 }
