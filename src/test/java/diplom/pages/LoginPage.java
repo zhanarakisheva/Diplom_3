@@ -1,7 +1,6 @@
 package diplom.pages;
 
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class LoginPage {
